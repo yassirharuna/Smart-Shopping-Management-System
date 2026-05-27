@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SMART SHOP MANAGEMENT SYSTEM - Products</title>
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-icon">S</div>
+        <div class="logo-text">SMART <span>SHOP</span></div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Primary navigation">
+        <div class="nav-section">
+          <div class="nav-section-title">Dashboard</div>
+          <a class="nav-item" href="/dashboard" data-nav="dashboard"><span class="nav-icon">📊</span><span>Overview</span></a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Management</div>
+          <a class="nav-item active" href="/products" data-nav="products"><span class="nav-icon">📦</span><span>Products</span></a>
+          <a class="nav-item" href="/sales" data-nav="sales"><span class="nav-icon">🧾</span><span>Sales</span></a>
+          <a class="nav-item" href="/customers" data-nav="customers"><span class="nav-icon">👥</span><span>Customers</span></a>
+          <a class="nav-item" href="/reports" data-nav="reports"><span class="nav-icon">📈</span><span>Reports</span></a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-outline w-100" id="btnLogout" type="button">Logout</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="app-header">
+        <div class="header-left">
+          <button class="menu-toggle" id="menuToggle" type="button">☰</button>
+          <div class="page-title">Products</div>
+        </div>
+        <div class="header-right">
+          <button class="header-btn" id="btnDarkMode" type="button" title="Toggle dark mode">🌙</button>
+          <div class="user-menu" id="userMenu">
+            <div class="user-avatar" id="userAvatar">U</div>
+            <div class="user-info">
+              <div class="user-name" id="userName">—</div>
+              <div class="user-role" id="userRole">—</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section style="margin-top: var(--spacing-lg);">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Product Search & Filters</div>
+            <button class="btn btn-primary" id="btnAddProduct" type="button">+ Add Product</button>
+          </div>
+          <div class="card-body" style="padding-top: 0;">
+            <div class="form-row">
+              <div class="search-box">
+                <span class="search-icon">🔎</span>
+                <input class="search-input" id="searchInput" placeholder="Search name/description/barcode" />
+              </div>
+              <select class="form-select" id="categoryFilter">
+                <option value="">All Categories</option>
+              </select>
+              <select class="form-select" id="stockStatusFilter">
+                <option value="">All Stock Status</option>
+                <option value="in_stock">In Stock</option>
+                <option value="low_stock">Low Stock</option>
+                <option value="out_of_stock">Out of Stock</option>
+              </select>
+            </div>
+
+            <div style="display:flex; gap: 0.75rem; margin-top: var(--spacing-md);">
+              <button class="btn btn-secondary" id="btnApplyFilters" type="button">Apply</button>
+              <button class="btn btn-outline" id="btnResetFilters" type="button">Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top: var(--spacing-lg);">
+          <div class="card-header">
+            <div class="card-title">Products</div>
+            <div class="text-muted" id="stockCounts"></div>
+          </div>
+
+          <div class="card-body">
+            <div class="table-container">
+              <table class="table" id="productsTable">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Barcode</th>
+                    <th>Qty</th>
+                    <th>Buying</th>
+                    <th>Selling</th>
+                    <th>Stock</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+
+            <div id="productsEmpty" class="empty-state d-none">
+              <div class="empty-icon">📦</div>
+              <div class="empty-title">No products found</div>
+              <div class="empty-text">Try changing filters or add a new product.</div>
+            </div>
+
+            <div class="pagination" id="pagination"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal (Add/Edit) -->
+  <div class="modal-overlay" id="productModalOverlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
+      <div class="modal-header">
+        <div class="modal-title" id="productModalTitle">Add Product</div>
+        <button class="modal-close" id="productModalClose" type="button">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="productForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="pName">Product Name</label>
+              <input class="form-input" id="pName" name="name" required />
+              <div class="form-error" id="pNameError"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="pCategory">Category</label>
+              <select class="form-select" id="pCategory" name="category" required></select>
+              <div class="form-error" id="pCategoryError"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="pDescription">Description</label>
+            <textarea class="form-textarea" id="pDescription" name="description" maxlength="500" placeholder="Optional"></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="pBarcode">Barcode/ID (optional)</label>
+              <input class="form-input" id="pBarcode" name="barcode" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="pImage">Product Image URL</label>
+              <input class="form-input" id="pImage" name="image" placeholder="uploads/... or https://..." />
+              <div class="form-hint">For file upload, use the image URL returned after upload.</div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="pQuantity">Quantity</label>
+              <input class="form-input" type="number" id="pQuantity" name="quantity" min="0" value="0" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="pMinStock">Min Stock</label>
+              <input class="form-input" type="number" id="pMinStock" name="minStock" min="0" value="10" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="pBuyingPrice">Buying Price</label>
+              <input class="form-input" type="number" step="0.01" id="pBuyingPrice" name="buyingPrice" min="0" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="pSellingPrice">Selling Price</label>
+              <input class="form-input" type="number" step="0.01" id="pSellingPrice" name="sellingPrice" min="0" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="pStatus">Status</label>
+              <select class="form-select" id="pStatus" name="status" required>
+                <option value="active">active</option>
+                <option value="inactive">inactive</option>
+                <option value="discontinued">discontinued</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display:flex; gap: 0.75rem; flex-wrap: wrap; margin-top: var(--spacing-md);">
+            <button class="btn btn-primary" id="productFormSubmit" type="submit">Save</button>
+            <button class="btn btn-outline" id="productFormCancel" type="button">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="/assets/js/api.js"></script>
+  <script src="/assets/js/ui.js"></script>
+  <script src="/assets/js/products.js"></script>
+</body>
+</html>
+

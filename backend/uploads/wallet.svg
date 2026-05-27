@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">
+  <rect width="100%" height="100%" fill="#FFF7E6"/>
+  <rect x="70" y="130" width="360" height="220" rx="14" fill="#6b4f4f"/>
+  <text x="50%" y="70%" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="28" fill="#fff">Leather Wallet</text>
+</svg>

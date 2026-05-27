@@ -1,0 +1,62 @@
+[
+  {
+    "_id": "646f1a000000000000000001",
+    "name": "Organic Milk",
+    "description": "Fresh organic whole milk, 1L",
+    "category": "Groceries",
+    "barcode": "MILK001",
+    "quantity": 50,
+    "minStock": 10,
+    "buyingPrice": 1.2,
+    "sellingPrice": 2.5,
+    "image": "/assets-img/Milk.jpeg",
+    "status": "active",
+    "stockStatus": "in_stock",
+    "dateAdded": "2026-05-20T00:00:00.000Z"
+  },
+  {
+    "_id": "646f1a000000000000000002",
+    "name": "Leather Wallet",
+    "description": "Genuine leather bi-fold wallet",
+    "category": "Accessories",
+    "barcode": "WALLET001",
+    "quantity": 25,
+    "minStock": 5,
+    "buyingPrice": 15.0,
+    "sellingPrice": 45.0,
+    "image": "/assets-img/Wallet.jpeg",
+    "status": "active",
+    "stockStatus": "in_stock",
+    "dateAdded": "2026-05-20T00:00:00.000Z"
+  },
+  {
+    "_id": "646f1a000000000000000003",
+    "name": "Smartphone X1",
+    "description": "Latest model with 128GB storage",
+    "category": "Devices",
+    "barcode": "PHONE001",
+    "quantity": 15,
+    "minStock": 3,
+    "buyingPrice": 400.0,
+    "sellingPrice": 699.0,
+    "image": "/assets-img/Phone.jpeg",
+    "status": "active",
+    "stockStatus": "in_stock",
+    "dateAdded": "2026-05-20T00:00:00.000Z"
+  },
+  {
+    "_id": "646f1a000000000000000004",
+    "name": "Basmati Rice",
+    "description": "Premium long-grain basmati rice, 5kg",
+    "category": "Groceries",
+    "barcode": "RICE001",
+    "quantity": 30,
+    "minStock": 5,
+    "buyingPrice": 12.0,
+    "sellingPrice": 18.5,
+    "image": "/assets-img/Rice.jpeg",
+    "status": "active",
+    "stockStatus": "in_stock",
+    "dateAdded": "2026-05-20T00:00:00.000Z"
+  }
+]

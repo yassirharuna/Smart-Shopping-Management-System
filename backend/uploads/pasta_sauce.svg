@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">
+  <rect width="100%" height="100%" fill="#FFFBF0"/>
+  <rect x="180" y="160" width="140" height="160" rx="8" fill="#d9534f"/>
+  <text x="50%" y="76%" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="16" fill="#fff">Canned Pasta Sauce</text>
+</svg>

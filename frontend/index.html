@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SMART SHOP MANAGEMENT SYSTEM</title>
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-icon">S</div>
+        <div class="logo-text">SMART <span>SHOP</span></div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Primary navigation">
+        <div class="nav-section">
+          <div class="nav-section-title">Dashboard</div>
+          <a class="nav-item" href="/dashboard" data-nav="dashboard">
+            <span class="nav-icon">📊</span>
+            <span>Overview</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Management</div>
+          <a class="nav-item" href="/products" data-nav="products">
+            <span class="nav-icon">📦</span>
+            <span>Products</span>
+          </a>
+          <a class="nav-item" href="/sales" data-nav="sales">
+            <span class="nav-icon">🧾</span>
+            <span>Sales</span>
+          </a>
+          <a class="nav-item" href="/customers" data-nav="customers">
+            <span class="nav-icon">👥</span>
+            <span>Customers</span>
+          </a>
+          <a class="nav-item" href="/reports" data-nav="reports">
+            <span class="nav-icon">📈</span>
+            <span>Reports</span>
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-outline w-100" id="btnLogout" type="button">Logout</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="app-header">
+        <div class="header-left">
+          <button class="menu-toggle" id="menuToggle" type="button">☰</button>
+          <div class="page-title" id="pageTitle">Welcome</div>
+        </div>
+        <div class="header-right">
+          <button class="header-btn" id="btnDarkMode" type="button" title="Toggle dark mode">🌙</button>
+          <div class="user-menu" id="userMenu" title="Logged in user">
+            <div class="user-avatar" id="userAvatar">U</div>
+            <div class="user-info">
+              <div class="user-name" id="userName">—</div>
+              <div class="user-role" id="userRole">—</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="grid grid-2" style="margin-top: 2rem;">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Smart Shop Management</div>
+          </div>
+          <div class="card-body">
+            <p class="text-muted" style="margin-bottom: 1rem;">
+              Secure JWT authentication • Live API updates • Responsive dashboard
+            </p>
+            <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="stat-card" style="padding: 1rem; border: 1px solid var(--gray-200); border-radius: var(--radius-md);">
+                <div class="stat-icon primary">🔐</div>
+                <div class="stat-content">
+                  <div class="stat-label">Login required</div>
+                  <div class="stat-value">JWT</div>
+                </div>
+              </div>
+              <div class="stat-card" style="padding: 1rem; border: 1px solid var(--gray-200); border-radius: var(--radius-md);">
+                <div class="stat-icon info">⚡</div>
+                <div class="stat-content">
+                  <div class="stat-label">No cookies</div>
+                  <div class="stat-value">localStorage</div>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top: 1.25rem; display:flex; gap: 0.75rem; flex-wrap: wrap;">
+              <a class="btn btn-primary" href="/login">Go to Login</a>
+              <a class="btn btn-secondary" href="/register">Create Account</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">How it works</div>
+          </div>
+          <div class="card-body">
+            <ul style="padding-left: 1rem; color: var(--gray-700);">
+              <li>Register as Admin/Staff (role is optional in UI).</li>
+              <li>Login to receive a JWT token.</li>
+              <li>All protected API calls include Authorization: Bearer <token>.</li>
+              <li>All data is stored in MongoDB via Mongoose models.</li>
+            </ul>
+            <div class="empty-state" style="padding-top: 1.25rem;">
+              <div class="empty-title">Tip</div>
+              <div class="empty-text">Start by adding products, then create a sale.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="/assets/js/api.js"></script>
+  <script src="/assets/js/ui.js"></script>
+  <script src="/assets/js/auth.js"></script>
+</body>
+</html>
+
