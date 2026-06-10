@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SMART SHOP MANAGEMENT SYSTEM - Customers</title>
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-icon">S</div>
+        <div class="logo-text">SMART <span>SHOP</span></div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Primary navigation">
+        <div class="nav-section">
+          <div class="nav-section-title">Dashboard</div>
+          <a class="nav-item" href="/dashboard" data-nav="dashboard"><span class="nav-icon">📊</span><span>Overview</span></a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Management</div>
+          <a class="nav-item" href="/products" data-nav="products"><span class="nav-icon">📦</span><span>Products</span></a>
+          <a class="nav-item" href="/sales" data-nav="sales"><span class="nav-icon">🧾</span><span>Sales</span></a>
+          <a class="nav-item active" href="/customers" data-nav="customers"><span class="nav-icon">👥</span><span>Customers</span></a>
+          <a class="nav-item" href="/reports" data-nav="reports"><span class="nav-icon">📈</span><span>Reports</span></a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-outline w-100" id="btnLogout" type="button">Logout</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="app-header">
+        <div class="header-left">
+          <button class="menu-toggle" id="menuToggle" type="button">☰</button>
+          <div class="page-title">Customers</div>
+        </div>
+        <div class="header-right">
+          <button class="header-btn" id="btnDarkMode" type="button" title="Toggle dark mode">🌙</button>
+          <div class="user-menu" id="userMenu">
+            <div class="user-avatar" id="userAvatar">U</div>
+            <div class="user-info">
+              <div class="user-name" id="userName">—</div>
+              <div class="user-role" id="userRole">—</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section style="margin-top: var(--spacing-lg);">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Customer List</div>
+            <button class="btn btn-primary" id="btnAddCustomer" type="button">+ Add Customer</button>
+          </div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="search-box">
+                <span class="search-icon">🔎</span>
+                <input class="search-input" id="searchInput" placeholder="Search by name/email/phone" />
+              </div>
+              <select class="form-select" id="tierFilter">
+                <option value="">All Tiers</option>
+                <option value="bronze">bronze</option>
+                <option value="silver">silver</option>
+                <option value="gold">gold</option>
+                <option value="platinum">platinum</option>
+              </select>
+              <select class="form-select" id="activeFilter">
+                <option value="">All Status</option>
+                <option value="true">Active</option>
+                <option value="false">Inactive</option>
+              </select>
+            </div>
+
+            <div style="display:flex; gap: 0.75rem; margin-top: var(--spacing-md);">
+              <button class="btn btn-secondary" id="btnApplyFilters" type="button">Apply</button>
+              <button class="btn btn-outline" id="btnResetFilters" type="button">Reset</button>
+            </div>
+
+            <div class="table-container" style="margin-top: var(--spacing-lg);">
+              <table class="table" id="customersTable">
+                <thead>
+                  <tr>
+                    <th>Name</th><th>Email</th><th>Phone</th><th>Tier</th><th>Spent</th><th>Points</th><th>Status</th><th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+
+            <div id="customersEmpty" class="empty-state d-none">
+              <div class="empty-icon">👥</div>
+              <div class="empty-title">No customers found</div>
+              <div class="empty-text">Try different filters.</div>
+            </div>
+
+            <div class="pagination" id="pagination"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Customer Details Modal -->
+      <div class="modal-overlay" id="customerDetailsOverlay">
+        <div class="modal" style="max-width: 820px;">
+          <div class="modal-header">
+            <div class="modal-title">Customer Details</div>
+            <button class="modal-close" id="customerDetailsClose" type="button">✕</button>
+          </div>
+          <div class="modal-body">
+            <div id="customerDetailsHeader" style="margin-bottom: var(--spacing-lg);"></div>
+            <div class="table-container">
+              <table class="table" id="customerPurchasesTable">
+                <thead><tr><th>Invoice</th><th>Date</th><th>Staff</th><th>Total</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-outline" id="btnCloseCustomerDetails" type="button">Close</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add/Edit Customer Modal -->
+      <div class="modal-overlay" id="customerModalOverlay">
+        <div class="modal" style="max-width: 620px;">
+          <div class="modal-header">
+            <div class="modal-title" id="customerModalTitle">Add Customer</div>
+            <button class="modal-close" id="customerModalClose" type="button">✕</button>
+          </div>
+          <div class="modal-body">
+            <form id="customerForm" novalidate>
+              <div class="form-group">
+                <label class="form-label" for="cName">Name</label>
+                <input class="form-input" id="cName" required />
+                <div class="form-error" id="cNameError"></div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="cEmail">Email (optional)</label>
+                <input class="form-input" id="cEmail" type="email" />
+                <div class="form-error" id="cEmailError"></div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="cPhone">Phone</label>
+                <input class="form-input" id="cPhone" required />
+                <div class="form-error" id="cPhoneError"></div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="cCity">City (optional)</label>
+                  <input class="form-input" id="cCity" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="cCountry">Country (optional)</label>
+                  <input class="form-input" id="cCountry" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="cNotes">Notes</label>
+                <textarea class="form-textarea" id="cNotes"></textarea>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="cActive">Active</label>
+                  <select class="form-select" id="cActive">
+                    <option value="true">true</option>
+                    <option value="false">false</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="display:flex; gap: 0.75rem; flex-wrap: wrap; margin-top: var(--spacing-md);">
+                <button class="btn btn-primary" id="customerFormSubmit" type="submit">Save</button>
+                <button class="btn btn-outline" id="customerFormCancel" type="button">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="/assets/js/api.js"></script>
+  <script src="/assets/js/ui.js"></script>
+  <script src="/assets/js/customers.js"></script>
+</body>
+</html>
+
