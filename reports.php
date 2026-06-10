@@ -1,0 +1,128 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+?>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SMART SHOP MANAGEMENT SYSTEM - Reports</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/shop-theme.css" />
+</head>
+<body class="shop-theme">
+  <div class="app-container">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-img-wrap">
+          <img src="Shopping Logo.png" alt="Smart Shop Logo" />
+        </div>
+        <div class="logo-text">Smart Shop<span>Management System</span></div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Primary navigation">
+        <div class="nav-section">
+          <div class="nav-section-title">Dashboard</div>
+          <a class="nav-item" href="dashboard.php" data-nav="dashboard"><span class="nav-icon">📊</span><span>Overview</span></a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Management</div>
+          <a class="nav-item" href="products.php" data-nav="products"><span class="nav-icon">📦</span><span>Products</span></a>
+          <a class="nav-item" href="sales.php" data-nav="sales"><span class="nav-icon">🧾</span><span>Sales</span></a>
+          <a class="nav-item" href="customers.php" data-nav="customers"><span class="nav-icon">👥</span><span>Customers</span></a>
+          <a class="nav-item active" href="reports.php" data-nav="reports"><span class="nav-icon">📈</span><span>Reports</span></a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-outline w-100" id="btnLogout" type="button">Logout</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="app-header">
+        <div class="header-left">
+          <button class="menu-toggle" id="menuToggle" type="button">☰</button>
+          <div class="page-title">Reports</div>
+        </div>
+        <div class="header-right">
+          <button class="header-btn" id="btnDarkMode" type="button" title="Toggle dark mode">🌙</button>
+          <div class="user-menu" id="userMenu">
+            <div class="user-avatar" id="userAvatar">U</div>
+            <div class="user-info">
+              <div class="user-name" id="userName">—</div>
+              <div class="user-role" id="userRole">—</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section style="margin-top: var(--spacing-lg);">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">📊 Report Filters</div>
+          </div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="days">Date Range (days)</label>
+                <input class="form-input" id="days" type="number" min="7" max="365" value="30" />
+              </div>
+            </div>
+            <div style="display:flex; gap: 0.75rem; margin-top: var(--spacing-md);">
+              <button class="btn btn-primary" id="btnLoadReports" type="button">🔄 Load Reports</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid" style="grid-template-columns: 2fr 1fr; margin-top: var(--spacing-lg); gap: var(--spacing-lg);">
+          <div class="card">
+            <div class="card-header"><div class="card-title">📈 Sales Trend</div></div>
+            <div class="card-body"><div class="chart-container" style="height:300px;"><canvas id="chartReportsSales"></canvas></div></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">💳 Sales by Payment Method</div></div>
+            <div class="card-body"><div class="chart-container" style="height:300px;"><canvas id="chartPayment"></canvas></div></div>
+          </div>
+        </div>
+
+        <div class="grid" style="grid-template-columns: 1fr 1fr; margin-top: var(--spacing-lg); gap: var(--spacing-lg);">
+          <div class="card">
+            <div class="card-header"><div class="card-title">🥧 Products by Category</div></div>
+            <div class="card-body"><div class="chart-container" style="height:300px;"><canvas id="chartCategory"></canvas></div></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">🏆 Top Products Performance</div></div>
+            <div class="card-body"><div class="chart-container" style="height:300px;"><canvas id="chartTopProducts"></canvas></div></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top: var(--spacing-lg);">
+          <div class="card-header"><div class="card-title">🏅 Top Products Table</div></div>
+          <div class="card-body">
+            <div class="table-container">
+              <table class="table" id="topProductsTable">
+                <thead><tr><th>#</th><th>Product</th><th>Category</th><th>Units Sold</th><th>Revenue</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/reports.js"></script>
+  <script src="assets/js/auth.js"></script>
+</body>
+</html>
